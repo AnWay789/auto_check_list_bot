@@ -1,0 +1,29 @@
+[project]
+name = "auto-check-list-bot"
+version = "0.1.0"
+description = "Telegram bot for automated dashboard checklist"
+authors = [
+    {name = "Your Name",email = "you@example.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13,<3.15"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "aiogram>=3.15.0",
+    "httpx>=0.28.1",
+    "pydantic>=2.4.1,<2.12",
+    "pydantic-settings>=2.5.0,<2.12",
+    "python-dotenv>=1.0.0",
+]
+
+[tool.poetry]
+packages = [
+    { include = "auto_check_list_bot", from = "src" },
+    { include = "src", from = "." },
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
