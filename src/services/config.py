@@ -25,8 +25,8 @@ class Settings(BaseSettings):
     API_PORT: int = Field(default=8001)
 
     # Django API
-    DJANGO_EXTERNAL_HOST: str = Field(default="http://127.0.0.1:8000")
-    DJANGO_API_URL: str = Field(default="http://web:8000")
+    DJANGO_EXTERNAL_HOST: str = Field(default="http://77.244.221.86:9000")
+    DJANGO_API_URL: str = Field(default="http://web:9000")
     DJANGO_CALLBACK_ENDPOINT: str = Field(default="/api/dashbord_colback/")
 
     class Config:
