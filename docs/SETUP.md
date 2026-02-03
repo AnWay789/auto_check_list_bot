@@ -10,10 +10,9 @@
 ```bash
 git clone <url-репозитория> && cd auto_check_list_bot
 poetry install
-cp .env.example .env
 ```
 
-Файл `.env` в репозиторий не входит (указан в `.gitignore`); после клонирования создайте его из `.env.example` и заполните переменные.
+Переменные окружения задаются в **общем `.env` в родительской директории** (каталог, содержащий оба проекта: `auto_check_list` и `auto_check_list_bot`). Создайте там файл `.env` из `.env.example` (из любого из проектов) и заполните переменные. Файл `.env` в репозиторий не входит (указан в `.gitignore`).
 
 ### Переменные окружения
 
@@ -47,12 +46,13 @@ poetry run python -m auto_check_list_bot
 
 Бот можно запускать как сервис `telegram_bot` из Docker Compose проекта Django (`auto_check_list`):
 
-- В корне Django-проекта создайте `.env` на основе `.env.example` и заполните:
+- В **родительской директории обоих проектов** (каталог, содержащий `auto_check_list` и `auto_check_list_bot`) создайте общий `.env` на основе `.env.example` и заполните:
   - `TELEGRAM_BOT_TOKEN`
   - `TELEGRAM_CHAT_ID`
+  - при необходимости `TELEGRAM_PJ_PATH=./auto_check_list_bot`
 - По умолчанию Django обращается к боту по `TELEGRAM_URL=telegram_bot:8001`, а бот к Django по `DJANGO_API_URL=http://web:8000`.
 
-После этого достаточно выполнить в корне Django-проекта:
+После этого достаточно выполнить в каталоге `auto_check_list` (при настроенном в `docker-compose.yml` чтении `env_file: ../.env`):
 
 ```bash
 docker-compose up -d --build

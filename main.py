@@ -7,18 +7,18 @@ import logging
 import sys
 from contextlib import asynccontextmanager
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Загружаем .env перед импортом settings (на случай запуска вне Poetry)
-try:
-    from dotenv import load_dotenv
-
-    env_path = Path(__file__).resolve().parent / ".env"
-    if env_path.exists():
-        load_dotenv(env_path)
+_root_env = Path(__file__).resolve().parent.parent / ".env"   # puls/.env
+if _root_env.exists():
+    load_dotenv(_root_env)
+else:
+    _local_env = Path(__file__).resolve().parent / ".env"
+    if _local_env.exists():
+        load_dotenv(_local_env)
     else:
         load_dotenv()
-except Exception:
-    pass
 
 import uvicorn
 from fastapi import FastAPI

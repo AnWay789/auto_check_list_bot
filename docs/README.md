@@ -24,7 +24,7 @@ auto_check_list_bot/
 
 - `main.py` — точка входа приложения
 - `pyproject.toml` / `poetry.lock` — зависимости (Poetry)
-- `.env.example` — шаблон переменных окружения (копировать в `.env`)
+- `.env.example` — шаблон переменных окружения. Общий `.env` для Django и бота хранится в **родительской директории** обоих проектов (каталог, содержащий `auto_check_list` и `auto_check_list_bot`).
 - `.gitignore` — исключения для Git (в т.ч. `.env`, кэши, venv, артефакты тестов)
 - `Dockerfile` — образ для запуска в Docker
 
