@@ -34,7 +34,6 @@ class SendMessagePayload(BaseModel):
 
 @router.post("/api/checks/send")
 async def send_message_legacy(payload: dict, request: Request) -> dict[str, Any]:
-    """Legacy endpoint (совместимость): POST /api/send_message/."""
     if "dashboards" not in payload:
         raise HTTPException(status_code=400, detail="Missing 'dashboards' field in payload")
     dashboards_data = payload["dashboards"]

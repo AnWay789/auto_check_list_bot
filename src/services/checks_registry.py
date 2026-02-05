@@ -35,18 +35,19 @@ class ChecksRegistry:
             keyboard = dashboard_check_keyboard(check.event_uuid)
 
             message_text = (
-                f"[🔧 Событие]({settings.DJANGO_EXTERNAL_HOST}/admin/check_list/checkevents/{uuid.UUID(check.event_uuid)}/change/)\n" # ссылка на событие в админке джанги
-                f"👀 Пора проверить дашборд: **{check.name}**\n\n"
-                f"📚 Описание: {check.description}\n\n"
-                f"[🔗 Ссылка для проверки]({check.fake_url})\n\n"
-                f"⏱ Время на проверку: **{check.time_for_check} мин**"
+                f'<a href="{settings.DJANGO_EXTERNAL_HOST}/admin/check_list/checkevents/{uuid.UUID(check.event_uuid)}/change/">🔧 Событие</a>\n'
+                f'👀 Пора проверить дашборд: <b>{check.name}</b>\n\n'
+                f'📚 <b>Описание:</b> {check.description}\n\n'
+                f'<a href="{check.fake_url}">🔗 Ссылка для проверки</a>\n\n'
+                f'⏱ Время на проверку: <b>{check.time_for_check} мин</b>'
             )
 
             sent = await bot.send_message(
                 chat_id=settings.TELEGRAM_CHAT_ID,
                 text=message_text,
                 reply_markup=keyboard,
-                parse_mode="MarkdownV2",
+                parse_mode="HTML",
+                disable_web_page_preview=True
             )
 
             check.message_id = sent.message_id
@@ -131,24 +132,23 @@ class ChecksRegistry:
 
         if check.problem is None:
             status_emoji = "⏱"
-            status_text = "Время истекло\\.\\.\\."
+            status_text = "Время истекло..."
             result_text = f"{status_emoji} Проверка завершена по таймауту"
         elif check.problem:
             status_emoji = "❌"
-            status_text = "Есть проблема\\!"
+            status_text = "Есть проблема!"
             result_text = f"{status_emoji} Проверка завершена с проблемами"
         else:
             status_emoji = "✅"
-            status_text = "Все ОК\\!"
+            status_text = "Все ОК!"
             result_text = f"{status_emoji} Проверка завершена успешно"
 
-        escaped_name = escape_markdown(check.name)
         updated_text = (
-            f"||⚓️{escape_markdown(str(uuid.UUID(check.event_uuid)))}||\n"  # невидимый текст с UUID для удобства поиска
-            f"[🔧 Событие]({settings.DJANGO_EXTERNAL_HOST}/admin/check_list/checkevents/{uuid.UUID(check.event_uuid)}/change/)\n" # ссылка на событие в админке джанги
-            f"🔍 Проверка дашборда: **{escaped_name}**\n\n"
-            f"{status_emoji} Результат: {status_text}\n"
-            f"{result_text}"
+            f'<span class="tg-spoiler">⚓️{uuid.UUID(check.event_uuid)}</span>\n'
+            f'<a href="{settings.DJANGO_EXTERNAL_HOST}/admin/check_list/checkevents/{uuid.UUID(check.event_uuid)}/change/">🔧 Событие</a>\n'
+            f'🔍 Проверка дашборда: <b>{check.name}</b>\n\n'
+            f'{status_emoji} <b>Результат:</b> {status_text}\n'
+            f'{result_text}'
         )
 
         try:
@@ -157,7 +157,8 @@ class ChecksRegistry:
                 chat_id=settings.TELEGRAM_CHAT_ID,
                 message_id=check.message_id,
                 text=updated_text,
-                parse_mode="MarkdownV2",
+                parse_mode="HTML",
+                disable_web_page_preview=True
             )
         except Exception as e:
             logger.warning("Could not update message %s: %s", check.message_id, e)
