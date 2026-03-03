@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-
+from datetime import datetime
 import httpx
 
 from .config import settings
@@ -22,10 +22,11 @@ class DjangoAPIClient:
     async def close(self) -> None:
         await self._client.aclose()
 
-    async def send_check_result(self, event_uuid: str, problem: bool) -> bool:
+    async def send_check_result(self, event_uuid: str, problem: bool, date_time: datetime) -> bool:
         url = f"{self.base_url}{self.callback_endpoint}"
         payload = {"event_uuid": event_uuid, 
-                   "problem": problem}
+                   "problem": problem,
+                   "date_time": date_time.isoformat()}
         try:
             resp = await self._client.post(url, json=payload)
             resp.raise_for_status()

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+from datetime import datetime
 import logging
 import uuid
 from typing import Dict, Optional
@@ -93,7 +94,7 @@ class ChecksRegistry:
             check.button_clicked = True
             check.problem = problem
 
-            success = await self._django_client.send_check_result(event_uuid=event_uuid, problem=problem)
+            success = await self._django_client.send_check_result(event_uuid=event_uuid, problem=problem, date_time=datetime.now())
             if not success:
                 await callback.answer("Ошибка при отправке результата. Попробуйте еще раз.", show_alert=True)
                 return
