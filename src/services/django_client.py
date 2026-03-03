@@ -22,7 +22,7 @@ class DjangoAPIClient:
     async def close(self) -> None:
         await self._client.aclose()
 
-    async def send_check_result(self, event_uuid: str, problem: bool, date_time: datetime) -> bool:
+    async def send_check_result(self, event_uuid: str, problem: bool, date_time: datetime | None = None) -> bool:
         url = f"{self.base_url}{self.callback_endpoint}"
         payload = {"event_uuid": event_uuid, 
                    "problem": problem,
