@@ -24,9 +24,9 @@ class DjangoAPIClient:
 
     async def send_check_result(self, event_uuid: str, problem: bool, date_time: datetime | None = None) -> bool:
         url = f"{self.base_url}{self.callback_endpoint}"
-        payload = {"event_uuid": event_uuid, 
-                   "problem": problem,
-                   "date_time": date_time.isoformat()}
+        payload: dict = {"event_uuid": event_uuid, "problem": problem}
+        if date_time is not None:
+            payload["date_time"] = date_time.isoformat()
         try:
             resp = await self._client.post(url, json=payload)
             resp.raise_for_status()
