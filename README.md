@@ -24,7 +24,7 @@ poetry run python main.py
 - `TELEGRAM_BOT_TOKEN` - токен вашего Telegram бота (получить у @BotFather)
 - `TELEGRAM_CHAT_ID` - ID чата куда отправлять сообщения
 - `DJANGO_API_URL` - URL Django приложения (по умолчанию http://localhost:8000)
-- `DJANGO_CALLBACK_ENDPOINT` - endpoint Django для приема результатов (по умолчанию `/api/dashbord_colback/`)
+- `DJANGO_CALLBACK_ENDPOINT` - endpoint Django для приема результатов (по умолчанию `/acl_api/dashbord_colback/`)
 
 ## Запуск
 
@@ -93,15 +93,15 @@ src/
 3. Пользователь переходит по fake_url (которая редиректит на real_url через Django)
 4. Django отслеживает переход и может уведомить бота (опционально)
 5. Пользователь нажимает кнопку "Все ОК!" или "Есть проблема!"
-6. Бот отправляет результат обратно в Django через `/api/dashbord_colback/`
+6. Бот отправляет результат обратно в Django через `/acl_api/dashbord_colback/`
 7. Если время истекло, бот автоматически помечает проверку как проблемную
 
 ## Интеграция с Django
 
 Бот ожидает, что Django приложение:
 - Отправляет дашборды на `http://localhost:8001/api/send_message/`
-- Имеет эндпоинт `/api/dashbord_colback/` для приема результатов проверки
-- Имеет эндпоинт `/to_dashboard/{event_uuid}/` для редиректа на реальный дашборд
+- Имеет эндпоинт `/acl_api/dashbord_colback/` для приема результатов проверки
+- Имеет эндпоинт `/acl_api/to_dashboard/{event_uuid}/` для редиректа на реальный дашборд
 
 ## Документация
 

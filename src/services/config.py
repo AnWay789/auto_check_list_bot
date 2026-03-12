@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     # Django API
     DJANGO_EXTERNAL_HOST: str = Field(default="http://77.244.221.86:9000")
     DJANGO_API_URL: str = Field(default="http://web:9000")
-    DJANGO_CALLBACK_ENDPOINT: str = Field(default="/api/dashbord_colback/")
+    DJANGO_CALLBACK_ENDPOINT: str = Field(default="/acl_api/dashbord_colback/")
 
     class Config:
         env_file = ".env"

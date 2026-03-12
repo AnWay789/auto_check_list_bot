@@ -21,7 +21,7 @@ poetry install
 - `TELEGRAM_BOT_TOKEN` — токен бота
 - `TELEGRAM_CHAT_ID` — чат, куда слать уведомления (может быть `-100...`)
 - `DJANGO_API_URL` — базовый URL Django приложения (например `http://localhost:8000`)
-- `DJANGO_CALLBACK_ENDPOINT` — endpoint для callback (например `/api/dashbord_colback/`)
+- `DJANGO_CALLBACK_ENDPOINT` — endpoint для callback (например `/acl_api/dashbord_colback/`)
 
 Опциональные:
 
